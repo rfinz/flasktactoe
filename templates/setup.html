@@ -5,7 +5,7 @@
     <title>
       Tic Tac Toe
     </title>
-    
+
     <link rel="stylesheet" href="static/colors.css">
     <link rel="stylesheet" href="static/stylish.css">
 
@@ -13,14 +13,19 @@
 
   <body>
 
-    <form action="" method="post">
-      <input type="radio" name="color" value="1" > Red <br/>
-      <input type="radio" name="color" value="2" > Blue <br/>
-      <input type="radio" name="order" value="1" > First <br/>
-      <input type="radio" name="order" value="2" > Second <br/>
+    <form action="" method="post" class="centered" style="width:400px;">
+      <fieldset id="color">
+	<legend>Pick your team!</legend>
+	<input type="radio" name="color" value="1" checked="checked"> Red <br/>
+	<input type="radio" name="color" value="2" > Blue <br/>
+      </fieldset>
 
-      <input type="submit" value="Submit">
-
+      <fieldset>
+	<legend>Pick your playing order!</legend>
+	<input type="radio" name="order" value="1" checked="checked"> First <br/>
+	<input type="radio" name="order" value="2" > Second <br/>
+      </fieldset>
+      <input type="submit" value="Play!">
     </form>
 
   </body>

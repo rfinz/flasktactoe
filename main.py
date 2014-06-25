@@ -114,6 +114,19 @@ def ttt_logic(grid, turn, color):
 
 
 def compute_win(grid):
+    color = session['color']
+    op_color = abs(session['color']-3)
+    rotate_grid = [[grid[0][x],grid[1][x],grid[2][x]] \
+                       for x,l in enumerate(grid)]
+
+
+    if [color,color,color] in grid or [color,color,color] in rotate_grid:
+        return color
+    if [op_color,op_color,op_color] in grid \
+       or [op_color,op_color,op_color] in rotate_grid:
+        return op_color
+
+
     return 0
 
 
@@ -186,6 +199,7 @@ def update():
                     session['grid'][c_row][c_column] = abs(session['color']-3)
                     break
 
+    session['win'] = compute_win(session['grid']);
     return render_template('index.html', 
                            grid=session['grid'],
                            turn = session['turn'],
