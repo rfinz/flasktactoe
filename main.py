@@ -14,16 +14,6 @@ def parsenum (s):
     except ValueError:
         return float(s)
 
-def search_list(li, l_of_l):
-    index = -1
-
-    for i,l in enum(l_of_l):
-        if li == l:
-            index = i
-            break
-    return index
-
-
 def ttt_logic(grid, turn, color):
     rotate_grid = [[grid[0][x],grid[1][x],grid[2][x]] \
                        for x,l in enumerate(grid)]
@@ -123,23 +113,30 @@ def ttt_logic(grid, turn, color):
     return row,column
 
 
+def compute_win(grid):
+    return 0
+
 
 
 @app.route("/setup", methods=['GET'])
 def setup():
-    session['grid'] = [[0,0,0],[0,0,0],[0,0,0]]
     return render_template('setup.html');
 
 @app.route("/setup", methods=['POST'])
 def update_setup():
+    session['grid'] = [[0,0,0],[0,0,0],[0,0,0]]
     session['color'] = parsenum(request.form['color'])
     session['order'] = parsenum(request.form['order'])
     session['turn'] = 0
     session['win'] = 0
     return redirect(url_for('index'))
 
-
-
+@app.route("/restart")
+def restart():
+    session['grid'] = [[0,0,0],[0,0,0],[0,0,0]]
+    session['turn'] = 0
+    session['win'] = 0
+    return redirect(url_for('index'))
 
 @app.route("/", methods=['GET'])
 def index():
@@ -156,31 +153,39 @@ def index():
                 session['grid'][c_row][c_column] = abs(session['color']-3)
                 break
 
-    return render_template('index.html',grid=session['grid'])
+    return render_template('index.html', 
+                           grid=session['grid'],
+                           turn = session['turn'],
+                           win = session['win'])
 
 @app.route("/", methods=['POST'])
 def update():
-    # perform player move
-    session['turn'] += 1
-    p_row = parsenum(request.form['play'].split(',')[0])
-    p_column = parsenum(request.form['play'].split(',')[1])
-    if session['grid'][p_row][p_column] == 0:
-        session['grid'][p_row][p_column] = session['color']
+    session['win'] = compute_win(session['grid']);
+    if session['win'] == 0:
+        # perform player move
+        session['turn'] += 1
+        p_row = parsenum(request.form['play'].split(',')[0])
+        p_column = parsenum(request.form['play'].split(',')[1])
+        if session['grid'][p_row][p_column] == 0:
+            session['grid'][p_row][p_column] = session['color']
+            
     
-    
-    # perform computer move
-    session['turn'] += 1
-    while True and session['turn'] < 10:
+            # perform computer move
+            session['turn'] += 1
+            while True and session['turn'] < 10:
+                
+                c_row,c_column = ttt_logic(session['grid'], 
+                                           session['turn'], 
+                                           abs(session['color']-3))
 
-        c_row,c_column = ttt_logic(session['grid'], 
-                                   session['turn'], 
-                                   abs(session['color']-3))
+                if session['grid'][c_row][c_column] == 0:
+                    session['grid'][c_row][c_column] = abs(session['color']-3)
+                    break
 
-        if session['grid'][c_row][c_column] == 0:
-            session['grid'][c_row][c_column] = abs(session['color']-3)
-            break
-
-    return render_template('index.html',grid=session['grid'])
+    return render_template('index.html', 
+                           grid=session['grid'],
+                           turn = session['turn'],
+                           win = session['win'])
 
 if __name__ == "__main__":
     app.run(debug=True)

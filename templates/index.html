@@ -5,40 +5,53 @@
     <title>
       Tic Tac Toe
     </title>
-    
+
     <link rel="stylesheet" href="static/colors.css">
     <link rel="stylesheet" href="static/stylish.css">
 
   </head>
 
   <body>
-
-    <table id="game-grid">
-      {% for row in grid %}
-      {% set outer_loop = loop %}
-      <tr>
-	{% for position in row %}
-	<td>
-	  {% if position==1 %}
-	  <div class="game-piece-red">
-	  </div>
-	  {% elif position==2 %}
-	  <div class="game-piece-blue">
-	  </div>
-	  {% else %}
-	  <div class="game-piece-empty">
-	    <form action="" method="post">
-	      <button name="play" class="unbutton" type="submit" value="{{outer_loop.index0}},{{loop.index0}}"></button>
-	    </form>
-	  </div>
-	  {% endif %}
-	</td>
+    <div class="container">
+      <h1 class="bigtitle"><span class="blue">Tic</span> Tac <span class="red">Toe</span></h1>
+      <table id="game-grid" class="centered">
+	{% for row in grid %}
+	{% set outer_loop = loop %}
+	<tr>
+	  {% for position in row %}
+	  <td>
+	    {% if position==1 %}
+	    <div class="game-piece-red">
+	    </div>
+	    {% elif position==2 %}
+	    <div class="game-piece-blue">
+	    </div>
+	    {% else %}
+	    <div class="game-piece-empty">
+	      <form action="" method="post">
+		<button name="play" class="unbutton" type="submit" value="{{outer_loop.index0}},{{loop.index0}}"></button>
+	      </form>
+	    </div>
+	    {% endif %}
+	  </td>
+	  {% endfor %}
+	</tr>
 	{% endfor %}
-      </tr>
-      {% endfor %}
-    </table>
+      </table>
+      <div class="top-padded">
+	{% if win == 1 %}
+	Red Wins! &nbsp
+	{% elif win == 2 %}
+	Blue Wins! &nbsp
+	{% endif %}
 
-
+	{% if win > 0 or turn >= 9%}
+	<a href="setup" id="play-again">Play again?</a>
+	{% else %}
+	<a href="restart">Restart</a>
+	{% endif %}
+      </div>
+    </div>
   </body>
 
 </html>
