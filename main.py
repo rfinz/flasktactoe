@@ -140,6 +140,10 @@ def restart():
 
 @app.route("/", methods=['GET'])
 def index():
+
+    if not 'grid' in session:
+        return redirect(url_for('setup'))
+
     # configure first time
     if session['order'] == 2 and session['turn'] == 0:
         session['turn'] += 1 
