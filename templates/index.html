@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <title>
+      Tic Tac Toe
+    </title>
+    
+    <link rel="stylesheet" href="static/colors.css">
+    <link rel="stylesheet" href="static/stylish.css">
+
+  </head>
+
+  <body>
+
+    <table id="game-grid">
+      {% for row in grid %}
+      {% set outer_loop = loop %}
+      <tr>
+	{% for position in row %}
+	<td>
+	  {% if position==1 %}
+	  <div class="game-piece-red">
+	  </div>
+	  {% elif position==2 %}
+	  <div class="game-piece-blue">
+	  </div>
+	  {% else %}
+	  <div class="game-piece-empty">
+	    <form action="" method="post">
+	      <button name="play" class="unbutton" type="submit" value="{{outer_loop.index0}},{{loop.index0}}"></button>
+	    </form>
+	  </div>
+	  {% endif %}
+	</td>
+	{% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+
+
+  </body>
+
+</html>

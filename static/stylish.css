@@ -1,0 +1,71 @@
+#game-grid {
+
+    border-collapse: collapse;
+
+}
+
+#game-grid td {
+
+    border: 1em solid #DDDDDD;
+    padding: 0;
+    height: 8em;
+    width: 8em;
+    -webkit-transition: background-color .5s;
+    transition: background-color .5s;
+
+}
+
+#game-grid td:hover {
+
+    background-color: #AAAAAA;
+
+}
+
+.game-piece-red {
+    
+    background-color: #ff4136;
+    height:100%;
+    width:100%;
+    z-index:99;
+    
+}
+
+.game-piece-blue {
+    
+    background-color: #0074d9;
+    height:100%;
+    width:100%;
+    z-index:99;
+    
+}
+
+.game-piece-empty {
+    
+    height:100%;
+    width:100%;
+    z-index:99;
+    
+}
+
+.game-piece-empty form{
+
+    height:100%;
+    width:100%;
+}
+
+.unbutton {
+
+    background:none!important;
+    border:none; 
+    padding:0!important;
+    height: 100%;
+    width: 100%;
+
+}
+
+.game-piece-empty form{
+
+    height:100%;
+    width:100%;
+}
+
